@@ -1,13 +1,10 @@
-import random
-
 import  arcade
-from arcade import  gui
 
-from Panels import MainPanel, RightPanel
+from .Panels import MainPanel, RightPanel
 
-from Animals import OrganismInspector
+from .Animals import OrganismInspector
 
-from Buttons import  ChangeColorButton
+from .Buttons import ChangeColorButton
 
 
 
@@ -15,6 +12,8 @@ class Window(arcade.Window):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.setup_start()
+    def run(self):
+        super().run()
 
     def setup_start(self):
         ###базовые данные
@@ -30,7 +29,7 @@ class Window(arcade.Window):
         self.create_organisms()
     def create_organisms(self):
         self.org_insp = OrganismInspector(self.main_panel.get_pos())
-        for i in range(5):
+        for i in range(50):
            self.org_insp.create_cell()
 
     def create_panels(self):
@@ -100,9 +99,3 @@ class Window(arcade.Window):
 
 
 
-
-def main():
-    window = Window(1280, 720, "Animals", resizable=True)
-
-    arcade.run()
-main()
