@@ -1,4 +1,4 @@
-import  arcade
+import  arcade, time
 
 from .Panels import MainPanel, RightPanel
 
@@ -28,9 +28,10 @@ class Window(arcade.Window):
         self.create_buttons()
         self.create_organisms()
     def create_organisms(self):
-        self.org_insp = OrganismInspector(self.main_panel.get_pos())
-        for i in range(50):
-           self.org_insp.create_cell()
+        self.org_insp = OrganismInspector(panel_borders= self.main_panel.get_pos())
+        self.org_insp.create_cells(50)
+        # for i in range(50):
+        #    self.org_insp.create_cell()
 
     def create_panels(self):
         # размеры окон
@@ -63,11 +64,16 @@ class Window(arcade.Window):
     #     return [main_panel_coords[0][0]+posx, main_panel_coords[0][1]+posy]
     def on_draw(self):
         arcade.start_render()
+
         #draw main panel
         arcade.draw_polygon_filled(self.main_panel.get_pos(), self.main_panel.color)
+
         #draw cells
         for cell in self.org_insp.get_cells():
             arcade.draw_circle_filled(cell.x_pos, cell.y_pos, cell.radius, cell.color)
+            # if cell.color == (255,255,0):
+            #     time.sleep(0.3)
+
         #draw right panel
         arcade.draw_polygon_filled(self.right_panel.get_pos(), self.right_panel.color)
         self.chng_clr_btn.draw()
@@ -78,11 +84,16 @@ class Window(arcade.Window):
 
     def on_resize(self, width: float, height: float):
         super().on_resize(width, height)
+
         # resize right panel
         self.right_panel.resize(width,height)
+
         #self.main_panel.resize(width,height)
+
         self.org_insp.resize(self.main_panel.get_pos())
+
         self.chng_clr_btn.resize(self.right_panel.get_pos())
+
         #print(f"arcade.get_window().width {arcade.get_window().width},  arcade.get_window().height {arcade.get_window().height}")
 
     def on_mouse_motion(self, x: int, y: int, dx: int, dy: int):

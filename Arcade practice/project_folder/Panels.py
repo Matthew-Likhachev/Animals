@@ -79,7 +79,7 @@ class MainPanel():
             (self.x3, self.y3),  # 3
             (self.x4, self.y4)  # 4
         )
-        print(self.panel_coords)
+        #print(self.panel_coords)
 
     def get_pos(self):
         return  self.panel_coords
