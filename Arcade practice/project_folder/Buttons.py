@@ -1,4 +1,4 @@
-import random
+import random, time
 import arcade
 
 class Button:
@@ -73,6 +73,16 @@ class Button:
             y += self.button_height
 
     def check_mouse_coords(self,x,y,is_clicked):
+        # print("y is ", y, type (y))
+        # print("center y is ", self.center_y, type (self.center_y))
+        # print("self.height  is ",  self.height, type ( self.height))
+        # print("###")
+        #
+        # print("x is ", x, type(x))
+        # print("center x is ", self.center_x, type(self.center_x))
+        # print("self.width  is ", self.width, type(self.width))
+        # print()
+        # print()
         if x > self.center_x + self.width / 2:
             self.on_release()
             return
@@ -97,6 +107,8 @@ class Button:
     def on_resize(self, center_x, center_y):
         self.center_x = center_x
         self.center_y = center_y
+
+
 class ChangeColorButton(Button):
     def __init__(self, *args, **kwargs):
         super().__init__( *args, **kwargs)
@@ -108,7 +120,7 @@ class ChangeColorButton(Button):
     def on_release(self):
         super().on_release()
     def resize(self, coords):
-        self.center_x =coords[0][0]+ (coords[2][0]-coords[0][0])/2
+        self.center_x = coords[0][0]+ (coords[2][0]-coords[0][0])/2
         self.center_y = coords[1][1]-self.height
         super().on_resize(self.center_x, self.center_y)
     def check_mouse_coords(self,x,y,is_clicked):
@@ -119,6 +131,9 @@ class ChangeColorButton(Button):
 class CreateCellButton(Button):
     def __init__(self, *args, **kwargs):
         super().__init__( *args, **kwargs)
+        #переменная для вкл/выкл спавна  клеток
+        self.is_activated_action = False
+        self.start_color = self.face_color
 
     def draw(self):
         super().draw()
@@ -127,19 +142,32 @@ class CreateCellButton(Button):
         super().on_press()
         self.action()
 
+
     def on_release(self):
         super().on_release()
 
     def resize(self, coords):
         self.center_x = coords[0][0] + (coords[2][0] - coords[0][0]) / 2
-        self.center_y = coords[1][1] - self.height
+        self.center_y = coords[1][1] - 100.0 - self.height
         super().on_resize(self.center_x, self.center_y)
 
     def check_mouse_coords(self, x, y, is_clicked):
         super().check_mouse_coords(x, y, is_clicked)
 
     def action(self):
-        arcade.set_background_color((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+        #arcade.set_background_color((random.randint(0,255),random.randint(0,255),random.randint(0,255)))
+
+        #включение и выключение режима активации
+        self.is_activated_action= not self.is_activated_action
+        print(self.is_activated_action)
+        #смена цвета
+        if self.is_activated_action:
+            self.face_color=(0,255 ,0)
+        else:
+            self.face_color= self.start_color
+
+
+        #Создание клетки
 #
 # class Button_Chng_Color(arcade.gui.UIFlatButton):
 #     def on_click(self, event: arcade.gui.UIOnClickEvent):

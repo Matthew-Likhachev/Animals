@@ -41,8 +41,9 @@ class RightPanel():
         self.set_pos(width, height)
 
 
+#Панель где происходит отрисовка
 class MainPanel():
-    panel_coords = []
+
     def __init__(self, width=1280, height=720,color= (255,255,255),window_width=1280, window_height=720):
         self.width= width
         self.height = height
@@ -82,5 +83,5 @@ class MainPanel():
         #print(self.panel_coords)
 
     def get_pos(self):
-        return  self.panel_coords
+        return self.panel_coords
 

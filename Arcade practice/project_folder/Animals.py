@@ -10,7 +10,7 @@ class OrganismInspector():
         cell_posy=random.randint(0,720)
         cell_changex = random.randint(-6,6)
         cell_changey = random.randint(-6,6)
-        cell_radius=random.randint(5,60)
+        cell_radius=random.randint(10,50)
         #cell_color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         cell_color = (255,0,0)
         self.cell_list.append(Cell(cell_posx, cell_posy, cell_changex,cell_changey, cell_radius, cell_color))
@@ -31,7 +31,8 @@ class OrganismInspector():
         self.main_panel_borders = new_panel_borders
         print(self.main_panel_borders)
     def update(self):
-        self.check_colisions_all_with_all()
+        if self.cell_list:
+            self.check_colisions()
         #print(len(self.cell_list))
         #print(len(self.cell_list[0:len(self.cell_list)//2]))
 
@@ -67,11 +68,11 @@ class OrganismInspector():
                   ......................
                   1................4....
             '''
-            if (cell.x_pos < self.main_panel_borders[0][0] or cell.x_pos > self.main_panel_borders[3][0]):
+            if (cell.x_pos + cell.radius < self.main_panel_borders[0][0] or cell.x_pos + cell.radius> self.main_panel_borders[3][0]):
                 cell.change_x *= -1
                 #self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
-            if (cell.y_pos < self.main_panel_borders[0][1] or cell.y_pos > self.main_panel_borders[1][1]):
+            if (cell.y_pos + cell.radius < self.main_panel_borders[0][1] or cell.y_pos + cell.radius > self.main_panel_borders[1][1]):
                 cell.change_y *= -1
                 #self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
     def check_colisions_all_with_all(self):
